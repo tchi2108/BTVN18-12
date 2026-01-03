@@ -1,48 +1,72 @@
-import { useNavigate } from "react-router-dom";
-import { logout } from "../utils/auth";
-
-const Dashboard = () => {
-  const navigate = useNavigate();
-
-  const products = [
-    { id: 1, name: "Laptop" },
-    { id: 2, name: "Phone" },
-  ];
-
-  const users = [
-    { id: 1, name: "Admin" },
-    { id: 2, name: "User" },
-  ];
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    Container,
+    Box,
+    Paper,
+    List,
+    ListItem,
+    ListItemText,
+  } from "@mui/material";
+  import { useNavigate } from "react-router-dom";
+  import { logout } from "../utils/auth";
+  
+  const Dashboard = () => {
+    const navigate = useNavigate();
+  
+    const products = ["Laptop", "Phone", "Tablet"];
+    const users = ["Admin", "User", "Guest"];
+  
+    const handleLogout = () => {
+      logout();
+      navigate("/login");
+    };
+  
+    return (
+      <>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              Admin Dashboard
+            </Typography>
+  
+            <Button color="inherit">Quản lý sản phẩm</Button>
+            <Button color="inherit">Quản lý users</Button>
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
+          </Toolbar>
+        </AppBar>
+  
+        <Container sx={{ mt: 4 }}>
+          <Box display="flex" gap={4}>
+            <Paper sx={{ p: 2, flex: 1 }}>
+              <Typography variant="h6">Quản lý sản phẩm</Typography>
+              <List>
+                {products.map((p, index) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={p} />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+  
+            <Paper sx={{ p: 2, flex: 1 }}>
+              <Typography variant="h6">Quản lý users</Typography>
+              <List>
+                {users.map((u, index) => (
+                  <ListItem key={index}>
+                    <ListItemText primary={u} />
+                  </ListItem>
+                ))}
+              </List>
+            </Paper>
+          </Box>
+        </Container>
+      </>
+    );
   };
-
-  return (
-    <div style={{ padding: 40 }}>
-      <header>
-        <h2>Dashboard</h2>
-        <button onClick={handleLogout}>Logout</button>
-      </header>
-
-      <hr />
-
-      <h3>Quản lý sản phẩm</h3>
-      <ul>
-        {products.map((p) => (
-          <li key={p.id}>{p.name}</li>
-        ))}
-      </ul>
-
-      <h3>Quản lý users</h3>
-      <ul>
-        {users.map((u) => (
-          <li key={u.id}>{u.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default Dashboard;
+  
+  export default Dashboard;
